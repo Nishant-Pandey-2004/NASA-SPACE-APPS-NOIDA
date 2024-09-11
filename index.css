@@ -1,0 +1,135 @@
+/* General styling */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #00457c;
+    color: white;
+    padding: 10px;
+}
+
+header img {
+    height: 50px;
+    margin-right: 10px;
+}
+
+header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+/* index.css */
+
+/* Other styles */
+
+.watermark {
+    position: absolute;
+    top: 10px; /* Adjust as needed */
+    right: 10px; /* Adjust as needed */
+    background-color: rgba(255, 255, 255, 0.7); /* Adjust opacity as needed */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: red; /* Adjust text color */
+    z-index: 1000; /* Ensure it's above the map */
+    opacity: 70%;
+}
+
+
+.map-container {
+    display: flex;
+    flex: 1;
+}
+
+#map {
+    flex: 1;
+    height: auto;
+    min-width: 60%; /* Set minimum width for map */
+    position: relative;
+}
+
+.history-box {
+    width: 10%; /* Set width for history box */
+    max-width: 400px; /* Limit maximum width */
+    background-color: #f8f9fa;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto; /* Enable vertical scrolling */
+    z-index: -1;
+}
+
+.history-box h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    text-align: center;
+    color: #000000;
+}
+
+.history-box ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.history-box li {
+    padding: 5px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.footer {
+    background-color: #f8f9fa;
+    padding: 10px;
+    text-align: center;
+    border-top: 1px solid #ccc;
+}
+
+.commands {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+}
+
+.command-box {
+    padding: 8px 16px;
+    background-color: #00457c;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.command-box:hover {
+    background-color: #0056b3;
+}
+
+.command-box:active {
+    background-color: #004573;
+}
+
+.command-box[title]::before {
+    content: attr(title);
+    display: none;
+}
+
+.command-box:hover[title]::before {
+    position: absolute;
+    display: block;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    z-index: 1000;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+}

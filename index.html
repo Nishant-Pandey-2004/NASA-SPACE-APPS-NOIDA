@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VANI - Voice Assistance for Navigation and Interaction</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <!-- Leaflet Routing Machine CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.css" />
+    <!-- SpeechKITT CSS -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/themes/flat-clouds.css">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Leaflet Routing Machine JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js"></script>
+    <!-- Annyang JS -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    
+    <header>
+        <img src="server/isro.png" alt="ISRO Logo">
+        <h1>VANI</h1>
+    </header>
+    <div class="map-container">
+        <div class="history-box">
+            <h2>History</h2>
+            <ul id="history-list"></ul>
+        </div>
+        <div id="map">
+            <div class="watermark">Vyom Voyagers</div>
+        </div>
+        
+    </div>
+    <div id="distance"></div>
+    <div id="coordinates"></div>
+    
+    <footer>
+        <p>Available (Voice) Commands:</p>
+        <div class="commands">
+            <span class="command-box" title="Say 'hello' to receive a greeting.">'hello'</span>
+            <span class="command-box" title="Say 'go to [city]' to navigate to a specific city.">'go to [city]'</span>
+            <span class="command-box" title="Show or hide vegetation layer.">'show vegetation'</span>
+            <span class="command-box" title="Show or hide highways layer.">'show highways'</span>
+            <span class="command-box" title="Switch to satellite view.">'show satellite'</span>
+            <span class="command-box" title="Switch to terrain view.">'show terrain'</span>
+            <span class="command-box" title="Zoom in on the map.">'zoom in'</span>
+            <span class="command-box" title="Zoom out on the map.">'zoom out'</span>
+            <span class="command-box" title="Mark a specific city on the map.">'mark [city]'</span>
+            <span class="command-box" title="Remove a marked city from the map.">'unmark [city]'</span>
+            <span class="command-box" title="Calculate the distance between marked cities and display the route.">'calculate distance'</span>
+            <span class="command-box" title="Stop listening for voice commands.">'stop listening'</span>
+        </div>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice-enabled Geospatial Navigation</title>
+    <style>
+        .mic-container {
+            position: relative;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            overflow: hidden; /* Ensures the mic icon is within the circular shape */
+        }
+        
+        .mic-icon {
+            width: 100%;
+            height: 100%;
+            background-image: url('isro.png'); /* Replace with your mic icon image */
+            background-size: cover;
+            background-position: center;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .wave {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.6);
+            transform-origin: center;
+            animation: pulse 1.5s infinite ease-in-out;
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .text-box {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f0f0f0;
+            width: 80%;
+            max-width: 600px;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <h1>Voice-enabled Geospatial Navigation</h1>
+    <div class="mic-container" id="micContainer">
+        <div class="mic-icon" id="micIcon">
+            <div class="wave" id="wave"></div>
+        </div>
+    </div>
+    <p id="status">Press the mic to start recording.</p>
+
+    <div class="text-box" id="textBox"></div>
+
+    <script src="script.js" defer></script>
+</body>
+</html>

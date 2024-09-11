@@ -1,0 +1,7 @@
+flask
+flask-cors
+torch
+openai-whisper
+pydub
+pyaudio
+numpy==1.24.1
