@@ -1,135 +1,172 @@
-/* General styling */
-body {
+/* General reset for styling */
+* {
     margin: 0;
-    font-family: Arial, sans-serif;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Orbitron', sans-serif; /* Futuristic font */
+    background: url('server/space-background.jpg') no-repeat center center fixed; /* Space background */
+    background-size: cover;
+    color: white;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    align-items: center;
 }
 
 header {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #00457c;
-    color: white;
-    padding: 10px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    border-bottom: 2px solid #fff;
+    width: 100%;
 }
 
 header img {
-    height: 50px;
-    margin-right: 10px;
+    width: 80px;
+    margin-right: 20px;
 }
 
 header h1 {
-    font-size: 1.5rem;
-    margin: 0;
+    font-size: 2.5rem;
+    color: #00bfff; /* NASA-like light blue */
+    text-shadow: 0px 0px 15px #00bfff;
 }
-
-/* index.css */
-
-/* Other styles */
-
-.watermark {
-    position: absolute;
-    top: 10px; /* Adjust as needed */
-    right: 10px; /* Adjust as needed */
-    background-color: rgba(255, 255, 255, 0.7); /* Adjust opacity as needed */
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    font-weight: bold;
-    color: red; /* Adjust text color */
-    z-index: 1000; /* Ensure it's above the map */
-    opacity: 70%;
-}
-
 
 .map-container {
-    display: flex;
-    flex: 1;
+    width: 90%;
+    height: 65vh;
+    margin: 20px 0;
+    position: relative;
+    display: flex; /* Flexbox for positioning */
 }
 
 #map {
-    flex: 1;
-    height: auto;
-    min-width: 60%; /* Set minimum width for map */
+    flex: 1; /* Map takes remaining space */
+    height: 100%;
+    border: 3px solid #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
     position: relative;
 }
 
+/* History box on the left side */
 .history-box {
-    width: 10%; /* Set width for history box */
-    max-width: 400px; /* Limit maximum width */
-    background-color: #f8f9fa;
-    padding: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    overflow-y: auto; /* Enable vertical scrolling */
-    z-index: -1;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    width: 250px;
+    max-height: 200px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    border-radius: 10px;
+    color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 255, 0.5);
+    overflow-y: auto;
+    z-index: 1000; /* Ensure it stays on top */
 }
 
 .history-box h2 {
-    margin-top: 0;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    margin-bottom: 10px;
     text-align: center;
-    color: #000000;
+    color: #00bfff;
 }
 
 .history-box ul {
-    list-style-type: none;
-    padding: 0;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    max-height: 160px; /* Adjust height to fit box */
+    overflow-y: auto; /* Scroll when content exceeds */
 }
 
-.history-box li {
-    padding: 5px 0;
-    border-bottom: 1px solid #ccc;
+.history-box ul li {
+    margin-bottom: 10px;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #00bfff;
+    box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.3);
 }
 
-.footer {
-    background-color: #f8f9fa;
+/* Distance box on the right side */
+#distance {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.7);
     padding: 10px;
-    text-align: center;
-    border-top: 1px solid #ccc;
+    border-radius: 10px;
+    color: white;
+    font-size: 1.2rem;
+    box-shadow: 0px 0px 15px rgba(0, 191, 255, 0.7);
+    z-index: 1000;
 }
 
-.commands {
+/* Coordinates display (below distance) */
+#coordinates {
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    font-size: 1.2rem;
+    box-shadow: 0px 0px 15px rgba(0, 191, 255, 0.7);
+    z-index: 1000;
+}
+
+/* Watermark on map */
+.watermark {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.7);
+}
+
+/* Footer styling */
+footer {
+    width: 100%;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    color: #fff;
+    border-top: 2px solid #00bfff;
+}
+
+footer p {
+    font-size: 1.2rem;
+}
+
+footer .commands {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 5px;
 }
 
-.command-box {
-    padding: 8px 16px;
-    background-color: #00457c;
-    color: white;
-    border-radius: 4px;
+footer .command-box {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    margin: 5px;
+    padding: 10px 15px;
+    font-size: 1rem;
+    color: #00bfff;
+    box-shadow: 0px 0px 10px rgba(0, 191, 255, 0.5);
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: all 0.3s;
 }
 
-.command-box:hover {
-    background-color: #0056b3;
-}
-
-.command-box:active {
-    background-color: #004573;
-}
-
-.command-box[title]::before {
-    content: attr(title);
-    display: none;
-}
-
-.command-box:hover[title]::before {
-    position: absolute;
-    display: block;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 5px;
-    border-radius: 4px;
-    z-index: 1000;
-    bottom: 100%;
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
+footer .command-box:hover {
+    background: #00bfff;
+    color: #fff;
+    box-shadow: 0px 0px 15px #fff;
 }
