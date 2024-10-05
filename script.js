@@ -4,11 +4,16 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 var vegetationLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png');
 var highwaysLayer = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png');
 
+// Functions for handling different map layers and controls
 const goToCoords = function(city) {
-    var inurl  = "https://nominatim.openstreetmap.org/search?q=" + city + "&limit=1&format=json&addressdetails=1";
-    $.when(ajax1()).done(function(data){
-        map.flyTo([data[0]["lat"],data[0]["lon"]],12);
-        addToHistory('Go to ' + city);
+    var inurl = "https://nominatim.openstreetmap.org/search?q=" + city + "&limit=1&format=json&addressdetails=1";
+    $.when(ajax1()).done(function(data) {
+        if (data.length > 0) {
+            map.flyTo([data[0]["lat"], data[0]["lon"]], 12);
+            addToHistory('Go to ' + city);
+        } else {
+            alert('City not found!');
+        }
     });
     function ajax1() {
         return $.ajax({
@@ -87,24 +92,28 @@ const addMarker = function(city) {
         url: markerUrl,
         dataType: "json",
         success: function(data) {
-            var lat = data[0].lat;
-            var lon = data[0].lon;
-            var marker = L.marker([lat, lon]).addTo(map).bindPopup(city).openPopup();
-            markersArray.push(marker); // Store marker in array
-            addToHistory('Mark ' + city);
+            if (data.length > 0) {
+                var lat = data[0].lat;
+                var lon = data[0].lon;
+                var marker = L.marker([lat, lon]).addTo(map).bindPopup(city);
+                markersArray.push(marker);
+                addToHistory('Mark ' + city);
+            } else {
+                alert('City not found!');
+            }
         }
     });
 };
 
 const removeMarker = function(city) {
-    map.eachLayer(function(layer) {
-        if (layer instanceof L.Marker && layer.getPopup().getContent() === city) {
-            map.removeLayer(layer);
+    markersArray = markersArray.filter(marker => {
+        if (marker.getPopup().getContent() === city) {
+            map.removeLayer(marker);
             addToHistory('Unmark ' + city);
+            return false;
         }
+        return true;
     });
-    // Remove from markersArray as well
-    markersArray = markersArray.filter(marker => marker.getPopup().getContent() !== city);
 };
 
 const calculateDistance = function() {
@@ -138,19 +147,70 @@ const calculateDistance = function() {
     });
 };
 
-const addToHistory = function(command) {
-    var historyList = document.getElementById('history-list');
-    var listItem = document.createElement('li');
-    listItem.textContent = command;
-    historyList.insertBefore(listItem, historyList.firstChild);
+// History Management
+const addToHistory = function(action) {
+    var historyList = document.getElementById("history-list");
+    var listItem = document.createElement("li");
+    listItem.textContent = action;
+    historyList.appendChild(listItem);
 };
 
+// Searchbar Event Listener for Text Input - Handling All Commands
+document.getElementById('search-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+        const input = this.value.trim().toLowerCase();
+        const command = input.split(' ');
+
+        // Identify which command was entered
+        if (input.startsWith('go to ')) {
+            const city = input.replace('go to ', '');
+            goToCoords(city);
+        } else if (input === 'show vegetation') {
+            toggleVegetation();
+        } else if (input === 'show highways') {
+            toggleHighways();
+        } else if (input === 'show satellite') {
+            toggleSatellite();
+        } else if (input === 'show terrain') {
+            toggleTerrain();
+        } else if (input === 'zoom in') {
+            zoomIn();
+        } else if (input === 'zoom out') {
+            zoomOut();
+        } else if (input.startsWith('mark ')) {
+            const city = input.replace('mark ', '');
+            addMarker(city);
+        } else if (input.startsWith('unmark ')) {
+            const city = input.replace('unmark ', '');
+            removeMarker(city);
+        } else if (input === 'calculate distance') {
+            calculateDistance();
+        } else {
+            alert("Command not recognized.");
+        }
+
+        // Clear input field after command is executed
+        this.value = '';
+    }
+});
+
+// Microphone Button to Activate Voice Command (One-time listening)
+document.getElementById('mic-button').addEventListener('click', function() {
+    if (annyang) {
+        // Start listening, but listen for a single command only
+        annyang.start({ autoRestart: false, continuous: false });
+
+        // Automatically stop after the first recognition event
+        annyang.addCallback('result', function() {
+            annyang.abort();
+        });
+        alert("Listening for voice commands...");
+    }
+});
+
+// Voice Command Setup (Annyang)
 if (annyang) {
     const commands = {
-        'hello': () => {
-            alert('Hey there, try some commands!');
-            addToHistory('Say hello');
-        },
         'go to *city': goToCoords,
         'show vegetation': toggleVegetation,
         'show highways': toggleHighways,
@@ -163,8 +223,8 @@ if (annyang) {
         'calculate distance': calculateDistance,
         'stop listening': stoplistening
     };
+
     annyang.addCommands(commands);
-    annyang.start();
     SpeechKITT.annyang();
     SpeechKITT.setStylesheet('//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/themes/flat-clouds.css');
     SpeechKITT.vroom();

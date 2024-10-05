@@ -21,11 +21,18 @@
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    
+
     <header>
         <img src="server/nasa.gif" alt="NASA Logo">
         <h1>VANI</h1>
     </header>
+
+    <!-- Search Bar with Mic Button -->
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search for a city..." />
+        <button id="mic-button">🎤</button>
+    </div>
+
     <div class="map-container">
         <div class="history-box">
             <h2>History</h2>
@@ -34,11 +41,10 @@
         <div id="map">
             <div class="watermark">Supernovas</div>
         </div>
-        
     </div>
+
     <div id="distance"></div>
 
-    
     <footer>
         <p>Available (Voice) Commands:</p>
         <div class="commands">
@@ -53,10 +59,9 @@
             <span class="command-box" title="Mark a specific city on the map.">'mark [city]'</span>
             <span class="command-box" title="Remove a marked city from the map.">'unmark [city]'</span>
             <span class="command-box" title="Calculate the distance between marked cities and display the route.">'calculate distance'</span>
-           
         </div>
     </footer>
-    
+
     <script src="script.js"></script>
 </body>
 </html>
