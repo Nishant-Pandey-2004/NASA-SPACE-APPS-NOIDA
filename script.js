@@ -1,8 +1,15 @@
 var map = L.map("map").setView([50, 8], 5);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
+// AQI (Air Quality Index) layer
+var WAQI_URL = "https://tiles.waqi.info/tiles/usepa-aqi/{z}/{x}/{y}.png?token=f9a3aa393a0d9a30af06f258f0a2854e227670db"; // Replace with your actual token
+var waqiLayer = L.tileLayer(WAQI_URL, {
+    attribution: 'Air Quality Tiles &copy; <a href="http://waqi.info">waqi.info</a>'
+})
+
 var vegetationLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png');
 var highwaysLayer = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png');
+let pollutionLayer = null;
 
 // Functions for handling different map layers and controls
 const goToCoords = function(city) {
@@ -66,6 +73,23 @@ const toggleTerrain = function() {
         map.addLayer(terrainLayer);
         addToHistory('Show terrain');
     }
+};
+
+const showPollutionMap = function() {
+    // Check if pollutionLayer already exists
+    if (pollutionLayer) {
+        map.removeLayer(pollutionLayer); // Remove the previous layer if it exists
+        pollutionLayer = null; // Reset the layer variable
+    }
+
+    // Create the pollution layer using the location
+    pollutionLayer = L.tileLayer(WAQI_URL, {
+        attribution: 'Air Quality Tiles &copy; <a href="http://waqi.info">waqi.info</a>',
+        opacity: 0.7
+    }).addTo(map);
+
+    // Log the action in history
+    addToHistory('Show pollution');
 };
 
 const zoomIn = function() {
@@ -185,9 +209,12 @@ document.getElementById('search-input').addEventListener('keydown', function(e) 
             removeMarker(city);
         } else if (input === 'calculate distance') {
             calculateDistance();
-        } else {
+        } else if (input === 'show pollution') {
+            showPollutionMap();
+        }else {
             alert("Command not recognized.");
         }
+
 
         // Clear input field after command is executed
         this.value = '';
@@ -221,7 +248,8 @@ if (annyang) {
         'mark *city': addMarker,
         'unmark *city': removeMarker,
         'calculate distance': calculateDistance,
-        'stop listening': stoplistening
+        'stop listening': stoplistening,
+        'show pollution': showPollutionMap,
     };
 
     annyang.addCommands(commands);
