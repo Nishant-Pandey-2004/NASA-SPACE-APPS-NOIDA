@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,8 @@
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <!-- Leaflet Routing Machine CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.css" />
     <!-- SpeechKITT CSS -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/SpeechKITT/0.3.0/themes/flat-clouds.css">
     <!-- jQuery -->
@@ -15,12 +17,14 @@
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <!-- Leaflet Routing Machine JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-routing-machine/3.2.12/leaflet-routing-machine.min.js"></script>
     <!-- Annyang JS -->
     <script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
     <link rel="stylesheet" href="index.css">
 
 </head>
+
 <body>
 
     <header>
@@ -28,16 +32,17 @@
         <h1>VANI</h1>
     </header>
 
-    <!-- Search Bar with Mic Button -->
-    <div class="search-bar">
-        <input type="text" id="search-input" placeholder="Search for a city..." />
-        <button id="mic-button">🎤</button>
-    </div>
+
 
     <div class="map-container">
         <div class="history-box">
             <h2>History</h2>
             <ul id="history-list"></ul>
+        </div>
+        <!-- Search Bar with Mic Button -->
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Type a command" />
+            <button id="mic-button">🎙️</button>
         </div>
         <div id="map">
             <div class="watermark">Supernovas</div>
@@ -47,7 +52,7 @@
     <div id="distance"></div>
 
     <footer>
-        <p>Available (Voice) Commands:</p>
+        <p>Available Commands:</p>
         <div class="commands">
             <span class="command-box" title="Say 'hello' to receive a greeting.">'hello'</span>
             <span class="command-box" title="Say 'go to [city]' to navigate to a specific city.">'go to [city]'</span>
@@ -59,12 +64,13 @@
             <span class="command-box" title="Zoom out on the map.">'zoom out'</span>
             <span class="command-box" title="Mark a specific city on the map.">'mark [city]'</span>
             <span class="command-box" title="Remove a marked city from the map.">'unmark [city]'</span>
-            <span class="command-box" title="Calculate the distance between marked cities and display the route.">'calculate distance'</span>
-            <span class="command-box" title="Show pollution map for a location.">'show pollution map for [location]'</span>
-            <span class="command-box" title="Show pollution map for a location.">'show pollution map for [location]'</span>
+            <span class="command-box"
+                title="Calculate the distance between marked cities and display the route.">'calculate distance'</span>
+            <span class="command-box" title="Show pollution map with Air Quality Index">'show pollution'</span>
         </div>
     </footer>
 
     <script src="script.js"></script>
 </body>
+
 </html>

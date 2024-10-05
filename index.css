@@ -6,8 +6,10 @@
 }
 
 body {
-    font-family: 'Orbitron', sans-serif; /* Futuristic font */
-    background: url('server/space-background.jpg') no-repeat center center fixed; /* Space background */
+    font-family: 'Orbitron', sans-serif;
+    /* Futuristic font */
+    background: url('server/space-background.jpg') no-repeat center center fixed;
+    /* Space background */
     background-size: cover;
     color: white;
     display: flex;
@@ -32,7 +34,8 @@ header img {
 
 header h1 {
     font-size: 2.5rem;
-    color: #00bfff; /* NASA-like light blue */
+    color: #00bfff;
+    /* NASA-like light blue */
     text-shadow: 0px 0px 15px #00bfff;
 }
 
@@ -41,11 +44,13 @@ header h1 {
     height: 65vh;
     margin: 20px 0;
     position: relative;
-    display: flex; /* Flexbox for positioning */
+    display: flex;
+    /* Flexbox for positioning */
 }
 
 #map {
-    flex: 1; /* Map takes remaining space */
+    flex: 1;
+    /* Map takes remaining space */
     height: 100%;
     border: 3px solid #fff;
     border-radius: 15px;
@@ -67,7 +72,8 @@ header h1 {
     color: #fff;
     box-shadow: 0px 0px 10px rgba(0, 0, 255, 0.5);
     overflow-y: auto;
-    z-index: 1000; /* Ensure it stays on top */
+    z-index: 1000;
+    /* Ensure it stays on top */
 }
 
 .history-box h2 {
@@ -81,8 +87,10 @@ header h1 {
     list-style: none;
     padding-left: 0;
     margin: 0;
-    max-height: 160px; /* Adjust height to fit box */
-    overflow-y: auto; /* Scroll when content exceeds */
+    max-height: 160px;
+    /* Adjust height to fit box */
+    overflow-y: auto;
+    /* Scroll when content exceeds */
 }
 
 .history-box ul li {
@@ -123,17 +131,22 @@ header h1 {
     z-index: 1000;
 }
 
-/* Watermark on map */
+
 .watermark {
     position: absolute;
-    bottom: 10px;
+    top: 20px;
     right: 10px;
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.7);
-    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.7);
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: red;
+    z-index: 1000;
+    opacity: 70%;
 }
 
-/* Footer styling */
+
 footer {
     width: 100%;
     text-align: center;
@@ -176,6 +189,16 @@ footer .command-box:hover {
     justify-content: center;
     align-items: center;
     margin: 10px;
+    z-index: 1000;
+
+    position: absolute;
+    top: 20px;
+    right: 30%;
+
+
+
+    z-index: 1000;
+    /* Ensure it stays on top */
 }
 
 #search-input {
@@ -187,16 +210,16 @@ footer .command-box:hover {
 }
 
 #mic-button {
-    background-color: #008cba;
+    background-color: #ffffff;
     color: white;
-    font-size: 16px;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
+    font-size: 26px;
+    border-color: #ff0000;
+    border-radius: 50%;
+
     margin-left: 5px;
     cursor: pointer;
 }
 
 #mic-button:hover {
-    background-color: #005f73;
+    background-color: #ff0000;
 }

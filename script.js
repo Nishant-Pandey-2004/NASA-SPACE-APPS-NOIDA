@@ -1,4 +1,4 @@
-var map = L.map("map").setView([50, 8], 5);
+var map = L.map("map").setView([21.82, 82.71], 5);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
 // AQI (Air Quality Index) layer
@@ -12,9 +12,9 @@ var highwaysLayer = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{
 let pollutionLayer = null;
 
 // Functions for handling different map layers and controls
-const goToCoords = function(city) {
+const goToCoords = function (city) {
     var inurl = "https://nominatim.openstreetmap.org/search?q=" + city + "&limit=1&format=json&addressdetails=1";
-    $.when(ajax1()).done(function(data) {
+    $.when(ajax1()).done(function (data) {
         if (data.length > 0) {
             map.flyTo([data[0]["lat"], data[0]["lon"]], 12);
             addToHistory('Go to ' + city);
@@ -30,7 +30,7 @@ const goToCoords = function(city) {
     }
 };
 
-const toggleVegetation = function() {
+const toggleVegetation = function () {
     if (map.hasLayer(vegetationLayer)) {
         map.removeLayer(vegetationLayer);
         addToHistory('Hide vegetation');
@@ -40,7 +40,7 @@ const toggleVegetation = function() {
     }
 };
 
-const toggleHighways = function() {
+const toggleHighways = function () {
     if (map.hasLayer(highwaysLayer)) {
         map.removeLayer(highwaysLayer);
         addToHistory('Hide highways');
@@ -50,10 +50,10 @@ const toggleHighways = function() {
     }
 };
 
-const toggleSatellite = function() {
-    var satelliteLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}',{
+const toggleSatellite = function () {
+    var satelliteLayer = L.tileLayer('https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
         maxZoom: 20,
-        subdomains:['mt0','mt1','mt2','mt3']
+        subdomains: ['mt0', 'mt1', 'mt2', 'mt3']
     });
     if (map.hasLayer(satelliteLayer)) {
         map.removeLayer(satelliteLayer);
@@ -64,7 +64,7 @@ const toggleSatellite = function() {
     }
 };
 
-const toggleTerrain = function() {
+const toggleTerrain = function () {
     var terrainLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png');
     if (map.hasLayer(terrainLayer)) {
         map.removeLayer(terrainLayer);
@@ -75,7 +75,7 @@ const toggleTerrain = function() {
     }
 };
 
-const showPollutionMap = function() {
+const showPollutionMap = function () {
     // Check if pollutionLayer already exists
     if (pollutionLayer) {
         map.removeLayer(pollutionLayer); // Remove the previous layer if it exists
@@ -92,17 +92,17 @@ const showPollutionMap = function() {
     addToHistory('Show pollution');
 };
 
-const zoomIn = function() {
+const zoomIn = function () {
     map.zoomIn();
     addToHistory('Zoom in');
 };
 
-const zoomOut = function() {
+const zoomOut = function () {
     map.zoomOut();
     addToHistory('Zoom out');
 };
 
-const stoplistening = function() {
+const stoplistening = function () {
     annyang.abort();
     addToHistory('Stop listening');
 };
@@ -110,12 +110,12 @@ const stoplistening = function() {
 let markersArray = [];
 let routingControl = null;
 
-const addMarker = function(city) {
+const addMarker = function (city) {
     var markerUrl = "https://nominatim.openstreetmap.org/search?q=" + city + "&format=json&limit=1";
     $.ajax({
         url: markerUrl,
         dataType: "json",
-        success: function(data) {
+        success: function (data) {
             if (data.length > 0) {
                 var lat = data[0].lat;
                 var lon = data[0].lon;
@@ -129,7 +129,7 @@ const addMarker = function(city) {
     });
 };
 
-const removeMarker = function(city) {
+const removeMarker = function (city) {
     markersArray = markersArray.filter(marker => {
         if (marker.getPopup().getContent() === city) {
             map.removeLayer(marker);
@@ -140,7 +140,7 @@ const removeMarker = function(city) {
     });
 };
 
-const calculateDistance = function() {
+const calculateDistance = function () {
     if (markersArray.length < 2) {
         alert("You need at least two markers to calculate distance.");
         return;
@@ -154,15 +154,15 @@ const calculateDistance = function() {
     routingControl = L.Routing.control({
         waypoints: waypoints,
         lineOptions: {
-            styles: [{color: 'red', opacity: 0.6, weight: 4}]
+            styles: [{ color: 'red', opacity: 0.6, weight: 4 }]
         },
-        createMarker: function() { return null; },
+        createMarker: function () { return null; },
         routeWhileDragging: true,
         show: false,
         addWaypoints: false
     }).addTo(map);
 
-    routingControl.on('routesfound', function(e) {
+    routingControl.on('routesfound', function (e) {
         var routes = e.routes;
         var summary = routes[0].summary;
         var distance = (summary.totalDistance / 1000).toFixed(2); // Convert to kilometers
@@ -172,7 +172,7 @@ const calculateDistance = function() {
 };
 
 // History Management
-const addToHistory = function(action) {
+const addToHistory = function (action) {
     var historyList = document.getElementById("history-list");
     var listItem = document.createElement("li");
     listItem.textContent = action;
@@ -180,7 +180,7 @@ const addToHistory = function(action) {
 };
 
 // Searchbar Event Listener for Text Input - Handling All Commands
-document.getElementById('search-input').addEventListener('keydown', function(e) {
+document.getElementById('search-input').addEventListener('keydown', function (e) {
     if (e.key === 'Enter') {
         const input = this.value.trim().toLowerCase();
         const command = input.split(' ');
@@ -211,7 +211,7 @@ document.getElementById('search-input').addEventListener('keydown', function(e) 
             calculateDistance();
         } else if (input === 'show pollution') {
             showPollutionMap();
-        }else {
+        } else {
             alert("Command not recognized.");
         }
 
@@ -222,13 +222,13 @@ document.getElementById('search-input').addEventListener('keydown', function(e) 
 });
 
 // Microphone Button to Activate Voice Command (One-time listening)
-document.getElementById('mic-button').addEventListener('click', function() {
+document.getElementById('mic-button').addEventListener('click', function () {
     if (annyang) {
         // Start listening, but listen for a single command only
         annyang.start({ autoRestart: false, continuous: false });
 
         // Automatically stop after the first recognition event
-        annyang.addCallback('result', function() {
+        annyang.addCallback('result', function () {
             annyang.abort();
         });
         alert("Listening for voice commands...");
