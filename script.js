@@ -171,6 +171,53 @@ const calculateDistance = function () {
     });
 };
 
+// AQI Widget Integration
+const showAQIWidget = function(city) {
+    goToCoords(city); // Navigate to the city first
+
+    // After the navigation is successful, load the AQI data
+    $.when(ajax1(city)).done(function() {
+        const container = document.getElementById('city-aqi-container');
+        container.innerHTML = ''; // Clear previous widget
+
+        // Set CSS styles for positioning
+        container.style.position = 'absolute';
+        container.style.zIndex = '1000';
+        container.style.position = 'fixed'; // Change to fixed for viewport centering
+        container.style.top = '50%'; // Move down 50% of the viewport height
+        container.style.left = '50%'; // Move right 50% of the viewport width
+        container.style.transform = 'translate(-50%, -50%)'; // Center it perfectly
+        container.style.color = 'black';
+
+        // Load the AQI data
+        _aqiFeed({
+            container: "city-aqi-container",
+            city: city.toLowerCase(),
+            
+            display: "%cityname AQI is %aqi<br><small>on %date</small>"
+        });
+
+        addToHistory('Show AQI widget of ' + city);
+    }).fail(function() {
+        alert('Unable to load AQI data for ' + city);
+    });
+};
+
+
+// Helper function to get city coordinates
+function ajax1(city) {
+    var inurl = "https://nominatim.openstreetmap.org/search?q=" + city + "&limit=1&format=json&addressdetails=1";
+    return $.ajax({
+        url: inurl,
+        dataType: "json"
+    });
+}
+
+const closeAQIWidget = function() {
+    document.getElementById('city-aqi-container').innerHTML = ''; // Clear the widget
+    addToHistory('Close AQI widget');
+};
+
 // History Management
 const addToHistory = function (action) {
     var historyList = document.getElementById("history-list");
@@ -211,7 +258,12 @@ document.getElementById('search-input').addEventListener('keydown', function (e)
             calculateDistance();
         } else if (input === 'show pollution') {
             showPollutionMap();
-        } else {
+        }else if (input.startsWith('show aqi of ')) {
+            const city = input.replace('show aqi of ', '');
+            showAQIWidget(city);
+        } else if (input === 'close widget') {
+            closeAQIWidget();}
+        else {
             alert("Command not recognized.");
         }
 
@@ -250,6 +302,8 @@ if (annyang) {
         'calculate distance': calculateDistance,
         'stop listening': stoplistening,
         'show pollution': showPollutionMap,
+        'show aqi of *city': showAQIWidget,
+        'close aqi': closeAQIWidget,
     };
 
     annyang.addCommands(commands);
