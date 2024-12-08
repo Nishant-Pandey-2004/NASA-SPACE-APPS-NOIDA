@@ -10,6 +10,7 @@ var waqiLayer = L.tileLayer(WAQI_URL, {
 var vegetationLayer = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png');
 var highwaysLayer = L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png');
 let pollutionLayer = null;
+let rainfallLayer = null;
 
 // Functions for handling different map layers and controls
 const goToCoords = function (city) {
@@ -90,6 +91,23 @@ const showPollutionMap = function () {
 
     // Log the action in history
     addToHistory('Show pollution');
+};
+
+const showRainfallMap = function () {
+    // Check if rainfallLayer already exists
+    if (rainfallLayer) {
+        map.removeLayer(rainfallLayer); // Remove the previous layer if it exists
+        rainfallLayer = null; // Reset the layer variable
+    }
+
+    // Create the rainfall layer using the location
+    rainfallLayer = L.tileLayer(WAQI_URL, {
+        attribution: 'Air Quality Tiles &copy; <a href="http://waqi.info">waqi.info</a>',
+        opacity: 0.7
+    }).addTo(map);
+
+    // Log the action in history
+    addToHistory('Show rainfall');
 };
 
 const zoomIn = function () {
@@ -226,6 +244,8 @@ const addToHistory = function (action) {
     historyList.appendChild(listItem);
 };
 
+
+
 // Searchbar Event Listener for Text Input - Handling All Commands
 document.getElementById('search-input').addEventListener('keydown', function (e) {
     if (e.key === 'Enter') {
@@ -263,6 +283,9 @@ document.getElementById('search-input').addEventListener('keydown', function (e)
             showAQIWidget(city);
         } else if (input === 'close widget') {
             closeAQIWidget();}
+            else if (input === 'show rainfall') {
+                showRainfallMap();
+            }
         else {
             alert("Command not recognized.");
         }
